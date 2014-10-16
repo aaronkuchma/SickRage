@@ -60,9 +60,22 @@
 			sortBy : \$.cookie('sortby'),
 			itemSelector : '.show',
 			getSortData : {
-				name : function( \$elem ) {
-				return \$elem.attr('data-name');
-			},
+			 name : function( \$elem ) {
+                var filtered = \$elem.attr('data-name');
+                
+                #if $sickbeard.SORT_ARTICLE:
+					return filtered;
+				#end if	
+
+                if(filtered.substring(0,4).toLowerCase() == "the "){
+                    filtered = filtered.substring(4);
+                } else if(filtered.substring(0,3).toLowerCase() == "an "){
+                    filtered = filtered.substring(3);
+                } else if(filtered.substring(0,2).toLowerCase() == "a "){
+                    filtered = filtered.substring(2);
+                }
+                return filtered;
+            },
 				network : function( \$elem ) {
 				return \$elem.attr('data-network');
 			},
